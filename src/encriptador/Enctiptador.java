@@ -326,66 +326,67 @@ public class Enctiptador extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Juan Gutierrez   -   230212050\nCamilo Pabon   -   230212039","Programadores",-1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public static String cifrarEspartano(String mensaje, int columnas) {
-        StringBuilder cifrado = new StringBuilder();
+public static String cifrarEspartano(String mensaje, int columnas) {
+    StringBuilder cifrado = new StringBuilder();
 
-        // Elimina espacios y convierte a mayúsculas
-        mensaje = mensaje.replaceAll("\\s+", "");
+    // Elimina espacios y convierte a mayúsculas
+    mensaje = mensaje.replaceAll("\\s", "").toUpperCase();
 
-        // Calcula el número de filas necesarias
-        int filas = (int) Math.ceil((double) mensaje.length() / columnas);
+    // Calcula el número de filas necesarias
+    int filas = (int) Math.ceil((double) mensaje.length() / columnas);
 
-        // Crea una matriz para organizar el mensaje
-        char[][] matriz = new char[filas][columnas];
-        int indiceMensaje = 0;
+    // Crea una matriz para organizar el mensaje
+    char[][] matriz = new char[filas][columnas];
+    int indiceMensaje = 0;
 
-        // Rellena la matriz con el mensaje original
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                if (indiceMensaje < mensaje.length()) {
-                    matriz[i][j] = mensaje.charAt(indiceMensaje++);
-                } else {
-                    matriz[i][j] = ' '; // Rellena con espacios en blanco si es necesario
-                }
-            }
-        }
-
-        // Lee la matriz en columnas para cifrar
+    // Rellena la matriz con el mensaje original, incluyendo espacios en blanco
+    for (int i = 0; i < filas; i++) {
         for (int j = 0; j < columnas; j++) {
-            for (int i = 0; i < filas; i++) {
-                cifrado.append(matriz[i][j]);
+            if (indiceMensaje < mensaje.length()) {
+                matriz[i][j] = mensaje.charAt(indiceMensaje++);
+            } else {
+                matriz[i][j] = ' '; // Rellena con espacios en blanco si es necesario
             }
         }
-
-        return cifrado.toString();
     }
 
-    public static String descifrarEspartano(String mensajeCifrado, int columnas) {
-        StringBuilder descifrado = new StringBuilder();
-
-        // Calcula el número de filas necesarias
-        int filas = (int) Math.ceil((double) mensajeCifrado.length() / columnas);
-
-        // Crea una matriz para organizar el mensaje cifrado
-        char[][] matriz = new char[filas][columnas];
-        int indiceMensaje = 0;
-
-        // Rellena la matriz con el mensaje cifrado
-        for (int j = 0; j < columnas; j++) {
-            for (int i = 0; i < filas; i++) {
-                matriz[i][j] = mensajeCifrado.charAt(indiceMensaje++);
-            }
-        }
-
-        // Lee la matriz por filas para descifrar
+    // Lee la matriz en columnas para cifrar
+    for (int j = 0; j < columnas; j++) {
         for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                descifrado.append(matriz[i][j]);
-            }
+            cifrado.append(matriz[i][j]);
         }
-
-        return descifrado.toString().trim(); // Elimina espacios finales si es necesario
     }
+
+    return cifrado.toString();
+}
+
+
+public static String descifrarEspartano(String mensajeCifrado, int columnas) {
+    StringBuilder descifrado = new StringBuilder();
+
+    // Calcula el número de filas necesarias
+    int filas = (int) Math.ceil((double) mensajeCifrado.length() / columnas);
+
+    // Crea una matriz para organizar el mensaje cifrado
+    char[][] matriz = new char[filas][columnas];
+    int indiceMensaje = 0;
+
+    // Rellena la matriz con el mensaje cifrado
+    for (int j = 0; j < columnas; j++) {
+        for (int i = 0; i < filas; i++) {
+            matriz[i][j] = mensajeCifrado.charAt(indiceMensaje++);
+        }
+    }
+
+    // Lee la matriz por filas para descifrar
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < columnas; j++) {
+            descifrado.append(matriz[i][j]);
+        }
+    }
+
+    return descifrado.toString().replaceAll("\\s+$", ""); // Elimina espacios finales si es necesario
+}
 
     public static String cifrarCesar(String mensaje, int desplazamiento) {
         StringBuilder cifrado = new StringBuilder();
